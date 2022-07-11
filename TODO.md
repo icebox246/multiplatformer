@@ -1,6 +1,5 @@
 # TODO:
 
--parity with SDL backend
 
 # DONE:
 
@@ -11,3 +10,4 @@
 - draw some tilemap
 - implement aabb physics body
 - create a movable camera
+- parity with SDL backend
