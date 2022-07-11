@@ -29,7 +29,7 @@
     }
 
     const module =
-        await WebAssembly.instantiateStreaming(fetch('game.wasm'), imports);
+        await WebAssembly.instantiateStreaming(fetch('./game.wasm'), imports);
 
     memoryView = new Uint8Array(module.instance.exports.memory.buffer);
 
