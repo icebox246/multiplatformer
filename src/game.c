@@ -29,6 +29,7 @@ const char world_temp[] =
     "\0";
 
 size_t kitty_tex;
+size_t dirt_tex;
 
 void game_init() {
     platform_print("Hello!");
@@ -36,6 +37,7 @@ void game_init() {
     platform_print("Loading textures...");
 
     kitty_tex = platform_load_texture("kitty.bmp");
+    dirt_tex = platform_load_texture("dirt.bmp");
 
     platform_print("Textures loaded!");
 
@@ -48,7 +50,7 @@ void game_init() {
 
     for (int tx = 0; tx < WORLD_SIZE; tx++) {
         for (int ty = 40; ty < WORLD_SIZE; ty++) {
-            st.world.tiles[tx + ty * WORLD_SIZE] = (tx % 20 < 17 || ty > 200);
+            st.world.tiles[tx + ty * WORLD_SIZE] = (tx % 20 < 17 || ty >= 45);
         }
     }
 
@@ -61,8 +63,14 @@ void game_update(float dt) { /* platform_print("Tick"); */
     Entity* player = &st.entities[0];
     {  // player stuff
         float player_move_acc = 1000;
-        float player_max_speed = 200;
+        float player_max_speed = 250;
         float player_jump_speed = 300;
+        float in_air_acc = 300;
+        float in_air_max_speed = 500;
+        if (!player->on_ground && !st.input.up) {
+            player_move_acc = in_air_acc;
+            player_max_speed = in_air_max_speed;
+        }
         if (st.input.right) {
             entity_accelerate(player, v2(player_move_acc, 0));
         }
@@ -70,10 +78,12 @@ void game_update(float dt) { /* platform_print("Tick"); */
             entity_accelerate(player, v2(-player_move_acc, 0));
         }
         // drag
+        /* if (player->on_ground) { */
         entity_accelerate(
             player, v2(-player->vel.x * player_move_acc / player_max_speed, 0));
+		/* } */
         // jump
-        if (st.input.up && player->on_ground) {
+        if (st.input.jp_up && player->on_ground) {
             player->vel.y = -player_jump_speed;
         }
     }
@@ -82,11 +92,13 @@ void game_update(float dt) { /* platform_print("Tick"); */
     st.camera.center = v2add(player->pos, v2scale(st.input.mouse_vec, 0.2f));
 
     for (size_t i = 0; i < st.entity_count; i++) {
-        if (!st.entities[i].on_ground) {
-            entity_accelerate(&st.entities[i], gravity);
-        }
+        /* if (!st.entities[i].on_ground) { */
+        entity_accelerate(&st.entities[i], gravity);
+        /* } */
         entity_update(&st.entities[i], dt);
     }
+
+	update_input();
 }
 
 void game_render(void) {
@@ -101,9 +113,9 @@ void game_render(void) {
             int x = tx * TILE_SIZE;
             int y = ty * TILE_SIZE;
             if (st.world.tiles[tx + ty * WORLD_SIZE]) {
-                platform_rect(x - st.camera.center.x + WIDTH / 2.0f,
+                platform_blit(x - st.camera.center.x + WIDTH / 2.0f,
                               y - st.camera.center.y + HEIGHT / 2.0f, TILE_SIZE,
-                              TILE_SIZE, 0xff2222ff);
+                              TILE_SIZE, dirt_tex);
             }
         }
     }
@@ -126,6 +138,7 @@ void game_key_down(size_t key) {
         case 'W':
         case 'w':
             st.input.up = 1;
+			st.input.jp_up = 1;
             break;
         case 'D':
         case 'd':

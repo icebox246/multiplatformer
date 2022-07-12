@@ -4,4 +4,6 @@
 
 extern GameState st;
 
+void update_input();
+
 #endif // __GLOBALS_H

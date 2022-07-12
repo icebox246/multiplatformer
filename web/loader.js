@@ -1,7 +1,8 @@
 (async () => {
     const canvas = document.querySelector('#canvas');
     const fpsDisplay = document.querySelector('#fps');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', {alpha: false});
+	ctx.imageSmoothingEnabled = false;
 
     const utf8decoder = new TextDecoder();
 
@@ -58,6 +59,8 @@
                         resolve(true);
                     };
                 })).catch(console.error);
+
+				return texId;
             },
 
             platform_blit(x, y, w, h, tex) {
@@ -87,7 +90,7 @@
         lastTime = timeNow;
         module.instance.exports.game_update(dt);
 
-        ctx.fillStyle = '#111111';
+        ctx.fillStyle = '#1E1F29';
         ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
         module.instance.exports.game_render();
 
@@ -110,6 +113,7 @@
     }, 1000);
 
     window.addEventListener('keydown', (e) => {
+        if (e.repeat) return;
         module.instance.exports.game_key_down(e.keyCode);
     })
     window.addEventListener('keyup', (e) => {

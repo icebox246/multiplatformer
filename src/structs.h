@@ -44,6 +44,7 @@ typedef enum { ST_RUNNING = 0, ST_PAUSED } GameStateType;
 
 typedef struct {
     bool up, down, left, right, fire;
+	bool jp_up;
     V2 mouse_pos;
     V2 mouse_vec;  // relative to center for aiming, etc.
 } InputState;

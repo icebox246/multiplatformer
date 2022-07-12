@@ -134,7 +134,7 @@ int main(void) {
         // update
         game_update(dt);
 
-        SDL_SetRenderDrawColor(renderer, COLOR(0x111111ff));
+        SDL_SetRenderDrawColor(renderer, COLOR(0x1E1F29ff));
         SDL_RenderClear(renderer);
 
         // render
