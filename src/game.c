@@ -40,7 +40,7 @@ void game_init() {
 
     for (int tx = 0; tx < WORLD_SIZE; tx++) {
         for (int ty = 40; ty < WORLD_SIZE; ty++) {
-            st.world.tiles[tx + ty * WORLD_SIZE] = platform_frand() < 0.2f;
+            st.world.tiles[tx + ty * WORLD_SIZE] = (tx % 20 < 17 || ty > 200);
         }
     }
 

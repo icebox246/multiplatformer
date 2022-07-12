@@ -13,22 +13,25 @@ float clampf(float a, float mn, float mx) {
     return a < mn ? mn : (a > mx ? mx : a);
 }
 
+#ifdef WASM
 void memset(void* p, int v, size_t s) {
     for (size_t i = 0; i < s; i++) {
         ((char*)p)[i] = v;
     }
 }
+#else
+#include <string.h>
+#endif
 
-extern char __int_conv_buff[MAX_INT_LENGTH];
+char __scratch_buff[MAX_SCRATCH_LENGTH];
 char* itoa(size_t a) {
-    memset(__int_conv_buff, 0, sizeof(__int_conv_buff));
+    char* ptr = __scratch_buff + MAX_SCRATCH_LENGTH - 1;
+    *ptr = '\0';
 
-    char* ptr = __int_conv_buff + MAX_INT_LENGTH - 1;
     if (a == 0) *(--ptr) = '0';
 
     while (a) {
-        ptr--;
-        *ptr = '0' + a % 10;
+        *(--ptr) = '0' + a % 10;
         a /= 10;
     }
 

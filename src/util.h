@@ -10,10 +10,12 @@ float absf(float);
 float lerp(float a, float b, float t);
 float clampf(float a, float mn, float mx);
 
+#ifdef WASM
 void memset(void* p, int v, size_t s);
+#endif
 
-#define MAX_INT_LENGTH 20
-extern char __int_conv_buff[MAX_INT_LENGTH];
+#define MAX_SCRATCH_LENGTH 64
+extern char __scratch_buff[];
 char* itoa(size_t a);
 
 AABB get_camera_aabb();
