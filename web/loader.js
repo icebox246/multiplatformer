@@ -87,7 +87,7 @@
         lastTime = timeNow;
         module.instance.exports.game_update(dt);
 
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = '#111111';
         ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
         module.instance.exports.game_render();
 
