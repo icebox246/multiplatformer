@@ -2,6 +2,7 @@
 
 - extract actual resolution of collisons between two aabbs
 - use that to implement collision resolution between entities
+- move javascript rendering to webgl
 
 # DONE:
 
