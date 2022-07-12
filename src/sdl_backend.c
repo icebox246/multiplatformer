@@ -2,11 +2,13 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "game.h"
 
@@ -25,6 +27,49 @@ void platform_rect(float x, float y, float w, float h, size_t color) {
 void platform_print(char* txt) { printf("%s\n", txt); }
 
 float platform_frand(void) { return rand() / (float)RAND_MAX; }
+
+typedef struct {
+    SDL_Texture* tex;
+    SDL_Rect rect;
+} TextureSlice;
+
+#define MAX_TEXTURES 128
+TextureSlice textures[MAX_TEXTURES];
+size_t texture_count = 0;
+
+size_t platform_load_texture(char* name) {
+    char buff[256];
+    {
+        char* en = buff;
+        strcpy(en, "assets/");
+        en += strlen("assets/");
+        strcpy(en, name);
+        en += strlen(name);
+        *en = '\0';
+    }
+    printf("[INFO] loading: %s\n", buff);
+
+    SDL_Surface* surf = SDL_LoadBMP(buff);
+
+    if (!surf) {
+        fprintf(stderr, "[ERROR] Failed to load %s, due to %s\n", buff,
+                SDL_GetError());
+		exit(1);
+    }
+
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
+    SDL_FreeSurface(surf);
+
+    SDL_Rect rect = {};
+
+    SDL_QueryTexture(tex, NULL, NULL, &rect.w, &rect.h);
+
+    textures[texture_count].tex = tex;
+    textures[texture_count].rect = rect;
+    texture_count++;
+
+    return texture_count - 1;
+}
 
 int main(void) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
@@ -54,7 +99,7 @@ int main(void) {
         if (now_time - last_report >= 1000) {
             printf("FPS: %zu\n", frames);
             frames = 0;
-			last_report = now_time;
+            last_report = now_time;
         }
         SDL_Event ev;
         while (SDL_PollEvent(&ev)) {

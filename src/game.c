@@ -28,8 +28,16 @@ const char world_temp[] =
     "....#############..............."
     "\0";
 
+size_t kitty_tex;
+
 void game_init() {
     platform_print("Hello!");
+
+	platform_print("Loading textures...");
+
+	kitty_tex = platform_load_texture("kitty.bmp");
+
+	platform_print("Textures loaded!");
 
     for (int tx = 0; tx < 32; tx++) {
         for (int ty = 0; ty < 16; ty++) {

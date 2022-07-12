@@ -1,6 +1,7 @@
 # TODO:
 
-
+- implement drawing images
+- implement creating subtextures
 
 # DONE:
 
@@ -15,3 +16,4 @@
 - extract actual resolution of collisons between two aabbs
 - use that to implement collision resolution between entities
 - implement proper tilemap rendering clamping
+- implement loading images

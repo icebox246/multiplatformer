@@ -18,5 +18,9 @@ void platform_rect(float x, float y, float w, float h, size_t color);
 void platform_print(char* txt);
 // returns random value between 0 and 1
 float platform_frand(void);
+// loads texture by name and returns its id
+size_t platform_load_texture(char* name); 
+// blits given texture to the screen
+/* void platform_blit(float x, float y, float w, float h, size_t tex); */ 
 
 #endif

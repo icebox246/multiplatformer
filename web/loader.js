@@ -6,15 +6,18 @@
     const utf8decoder = new TextDecoder();
 
     let memoryView;
+
+    const textures = [];
+
     const imports = {
         env: {
             platform_rect(x, y, w, h, color) {
                 color = (new Uint32Array([color]))[0]
                 ctx.fillStyle = '#' + color.toString(16);
-				x = Math.round(x);
-				y = Math.round(y);
-				h = Math.round(h);
-				w = Math.round(w);
+                x = Math.round(x);
+                y = Math.round(y);
+                h = Math.round(h);
+                w = Math.round(w);
                 ctx.fillRect(x, y, w, h);
             },
             platform_print(ptr) {
@@ -28,6 +31,33 @@
             },
             platform_frand() {
                 return Math.random();
+            },
+            platform_load_texture(ptr) {
+                const buff = [];
+                let i = ptr;
+                while (memoryView[i]) {
+                    buff.push(memoryView[i]);
+                    i++;
+                }
+                const assetName = utf8decoder.decode(new Uint8Array(buff));
+                const url = `../assets/${assetName}`;
+
+                console.log('[INFO] Loading', url);
+
+                const img = new Image();
+                img.src = url;
+                const texId = textures.length;
+                textures[texId] = {tex: img, rect: {x: 0, y: 0, w: 0, h: 0}};
+                (new Promise((resolve, reject) => {
+                    const timeout =
+                        setTimeout(() => reject('failed to load asset'), 3000);
+                    img.onload = () => {
+                        clearTimeout(timeout);
+                        textures[texId].rect.w = img.width;
+                        textures[texId].rect.h = img.height;
+                        resolve(true);
+                    };
+                })).catch(console.error);
             }
         }
     }
@@ -39,7 +69,7 @@
 
     let lastTime = null;
     let frames = 0;
-	let mousePos = { x: 0, y: 0 };
+    let mousePos = {x: 0, y: 0};
     module.instance.exports.game_init();
     const loop = (timeNow) => {
         const dt = (timeNow - lastTime) * 0.001;
