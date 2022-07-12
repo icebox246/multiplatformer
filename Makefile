@@ -1,4 +1,4 @@
-SOURCES=src/game.c src/globals.c src/physics.c src/entity.c src/la.c
+SOURCES=src/game.c src/globals.c src/physics.c src/entity.c src/la.c src/util.c
 LINUX_SOURCES=${SOURCES} src/sdl_backend.c
 WASM_SOURCES=${SOURCES} 
 

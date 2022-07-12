@@ -1,8 +1,6 @@
 # TODO:
 
-- extract actual resolution of collisons between two aabbs
-- use that to implement collision resolution between entities
-- move javascript rendering to webgl
+
 
 # DONE:
 
@@ -14,3 +12,6 @@
 - implement aabb physics body
 - create a movable camera
 - parity with SDL backend
+- extract actual resolution of collisons between two aabbs
+- use that to implement collision resolution between entities
+- implement proper tilemap rendering clamping

@@ -7,6 +7,7 @@
 #include "la.h"
 #include "physics.h"
 #include "structs.h"
+#include "util.h"
 
 const char world_temp[] =
     "................................"
@@ -30,10 +31,17 @@ const char world_temp[] =
 void game_init() {
     platform_print("Hello!");
 
-    for (size_t i = 0; i < 32 * 16; i++) {
-        int x = i % 32;
-        int y = i / 32;
-        st.world.tiles[x + y * WORLD_SIZE] = (world_temp[i] == '#');
+    for (int tx = 0; tx < 32; tx++) {
+        for (int ty = 0; ty < 16; ty++) {
+            st.world.tiles[tx + ty * WORLD_SIZE] =
+                (world_temp[tx + ty * 32] == '#');
+        }
+    }
+
+    for (int tx = 0; tx < WORLD_SIZE; tx++) {
+        for (int ty = 40; ty < WORLD_SIZE; ty++) {
+            st.world.tiles[tx + ty * WORLD_SIZE] = platform_frand() < 0.2f;
+        }
     }
 
     st.entities[st.entity_count++] =
@@ -74,8 +82,13 @@ void game_update(float dt) { /* platform_print("Tick"); */
 }
 
 void game_render(void) {
-    for (int tx = 0; tx < 32; tx++) {
-        for (int ty = 0; ty < 32; ty++) {
+    V2 mn, mx;
+    {
+        AABB a = get_camera_aabb();
+        get_aabb_tile_corners(&a, &mn, &mx);
+    }
+    for (int tx = mn.x; tx < mx.x + 1; tx++) {
+        for (int ty = mn.y; ty < mx.y + 1; ty++) {
             int x = tx * TILE_SIZE;
             int y = ty * TILE_SIZE;
             if (st.world.tiles[tx + ty * WORLD_SIZE]) {
@@ -111,7 +124,7 @@ void game_key_down(size_t key) {
             break;
         case 'S':
         case 's':
-            st.input.right = 1;
+            st.input.down = 1;
             break;
     }
 }
@@ -131,7 +144,7 @@ void game_key_up(size_t key) {
             break;
         case 'S':
         case 's':
-            st.input.right = 0;
+            st.input.down = 0;
             break;
     }
 }

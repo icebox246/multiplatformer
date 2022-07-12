@@ -7,6 +7,7 @@
 #include "globals.h"
 #include "la.h"
 #include "structs.h"
+#include "util.h"
 
 void entity_resolve_aabb_collision(Entity* entity, AABB* b, bool horz) {
     AABB a = get_entity_aabb(entity);
@@ -54,8 +55,8 @@ void entity_resolve_entity_collisions(Entity* entity, bool horz) {
 
 void entity_resolve_world_collisions(Entity* entity, bool horz) {
     AABB a = get_entity_aabb(entity);
-    V2 mn = v2scale(v2sub(a.center, a.half_size), 1.f / TILE_SIZE);
-    V2 mx = v2scale(v2add(a.center, a.half_size), 1.f / TILE_SIZE);
+    V2 mn, mx;
+    get_aabb_tile_corners(&a, &mn, &mx);
 
     for (size_t y = mn.y; y < mx.y + 1; y++) {
         for (size_t x = mn.x; x < mx.x + 1; x++) {
