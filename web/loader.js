@@ -58,7 +58,18 @@
                         resolve(true);
                     };
                 })).catch(console.error);
+            },
+
+            platform_blit(x, y, w, h, tex) {
+                w = w ? w : textures[tex].rect.w;
+                h = h ? h : textures[tex].rect.h;
+                ctx.drawImage(
+                    textures[tex].tex,                           //
+                    textures[tex].rect.x, textures[tex].rect.y,  //
+                    textures[tex].rect.w, textures[tex].rect.h,  //
+                    x, y, w, h);                                 //
             }
+
         }
     }
 

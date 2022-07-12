@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
+#include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
@@ -54,7 +55,7 @@ size_t platform_load_texture(char* name) {
     if (!surf) {
         fprintf(stderr, "[ERROR] Failed to load %s, due to %s\n", buff,
                 SDL_GetError());
-		exit(1);
+        exit(1);
     }
 
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
@@ -69,6 +70,17 @@ size_t platform_load_texture(char* name) {
     texture_count++;
 
     return texture_count - 1;
+}
+
+void platform_blit(float x, float y, float w, float h, size_t tex) {
+    SDL_FRect rect = {
+        .x = x,
+        .y = y,
+        .w = w ? w : textures[tex].rect.w,
+        .h = h ? h : textures[tex].rect.h,
+    };
+	
+    SDL_RenderCopyF(renderer, textures[tex].tex, &textures[tex].rect, &rect);
 }
 
 int main(void) {

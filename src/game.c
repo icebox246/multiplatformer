@@ -33,11 +33,11 @@ size_t kitty_tex;
 void game_init() {
     platform_print("Hello!");
 
-	platform_print("Loading textures...");
+    platform_print("Loading textures...");
 
-	kitty_tex = platform_load_texture("kitty.bmp");
+    kitty_tex = platform_load_texture("kitty.bmp");
 
-	platform_print("Textures loaded!");
+    platform_print("Textures loaded!");
 
     for (int tx = 0; tx < 32; tx++) {
         for (int ty = 0; ty < 16; ty++) {
@@ -90,6 +90,7 @@ void game_update(float dt) { /* platform_print("Tick"); */
 }
 
 void game_render(void) {
+    platform_blit(10, 10, 0, 0, kitty_tex);
     V2 mn, mx;
     {
         AABB a = get_camera_aabb();

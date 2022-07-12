@@ -1,6 +1,5 @@
 # TODO:
 
-- implement drawing images
 - implement creating subtextures
 
 # DONE:
@@ -17,3 +16,4 @@
 - use that to implement collision resolution between entities
 - implement proper tilemap rendering clamping
 - implement loading images
+- implement drawing images
