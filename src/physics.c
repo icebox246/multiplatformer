@@ -29,7 +29,7 @@ void entity_resolve_aabb_collision(Entity* entity, AABB* b, bool horz) {
                 entity->pos.y += dy;
             else
                 entity->pos.y -= dy;
-            if (entity->vel.y > 0) {
+            if (entity->vel.y >= 0) {
                 entity->on_ground = 1;
             }
             entity->vel.y = 0;
@@ -83,7 +83,7 @@ void entity_update(Entity* entity, float dt) {
     entity->pos.y += entity->vel.y * dt;
     entity->vel.y += entity->acc.y * dt;
 
-    if (entity->vel.y <= 0) entity->on_ground = 0;
+    if (entity->vel.y < 0) entity->on_ground = 0;
 
     entity_resolve_entity_collisions(entity, 0);
     entity_resolve_world_collisions(entity, 0);
