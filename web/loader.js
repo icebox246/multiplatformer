@@ -11,6 +11,10 @@
             platform_rect(x, y, w, h, color) {
                 color = (new Uint32Array([color]))[0]
                 ctx.fillStyle = '#' + color.toString(16);
+				x = Math.round(x);
+				y = Math.round(y);
+				h = Math.round(h);
+				w = Math.round(w);
                 ctx.fillRect(x, y, w, h);
             },
             platform_print(ptr) {
