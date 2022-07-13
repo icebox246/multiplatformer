@@ -84,12 +84,20 @@
     let lastTime = null;
     let frames = 0;
     let mousePos = {x: 0, y: 0};
+    const fixedDt = 1 / 120;
+    let timeSinceLastUpdate = 0;
     module.instance.exports.game_init();
     const loop = (timeNow) => {
         const dt = (timeNow - lastTime) * 0.001;
+        timeSinceLastUpdate += dt;
         lastTime = timeNow;
-        module.instance.exports.game_update(dt);
+        // update
+        while(timeSinceLastUpdate > fixedDt) {
+            module.instance.exports.game_update(fixedDt);
+            timeSinceLastUpdate -= fixedDt;
+        }
 
+        //render
         ctx.fillStyle = '#1E1F29';
         ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
         module.instance.exports.game_render();

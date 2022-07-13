@@ -1,5 +1,7 @@
 # TODO:
 
+- make game_update have fixed interval on sdl
+- move camera movement code to render
 - implement creating subtextures
 
 # DONE:
