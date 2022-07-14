@@ -1,3 +1,32 @@
+## TODOs:
+
+<!-- TODOS -->
+
+**TODO (0):**
+
+- [ ] make game_update have fixed interval on sdl
+- [ ] move camera movement code to render
+- [ ] implement creating subtextures
+
+**DONE (0):**
+
+- [x] open a window in SDL
+- [x] create a canvas and load wasm
+- [x] draw a crossplatform rectangle
+- [x] implement world holding
+- [x] draw some tilemap
+- [x] implement aabb physics body
+- [x] create a movable camera
+- [x] parity with SDL backend
+- [x] extract actual resolution of collisons between two aabbs
+- [x] use that to implement collision resolution between entities
+- [x] implement proper tilemap rendering clamping
+- [x] implement loading images
+- [x] implement drawing images
+
+<!-- ENDTODOS -->
+
+
 # WHAT!?!?!?!?!
 
 Fast paced 2d movement shooter.
