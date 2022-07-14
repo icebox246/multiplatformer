@@ -5,6 +5,7 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -79,7 +80,7 @@ void platform_blit(float x, float y, float w, float h, size_t tex) {
         .w = w ? w : textures[tex].rect.w,
         .h = h ? h : textures[tex].rect.h,
     };
-	
+
     SDL_RenderCopyF(renderer, textures[tex].tex, &textures[tex].rect, &rect);
 }
 
@@ -104,9 +105,13 @@ int main(void) {
     size_t last_report = SDL_GetTicks();
     size_t frames = 0;
 
+    const double fixed_dt = 1 / 60.0f;
+    double since_last_update = 0;
+
     while (running) {
         size_t now_time = SDL_GetTicks();
         float dt = (now_time - last_time) * 0.001f;
+        since_last_update += dt;
         last_time = now_time;
         if (now_time - last_report >= 1000) {
             printf("FPS: %zu\n", frames);
@@ -132,7 +137,10 @@ int main(void) {
         }
 
         // update
-        game_update(dt);
+        while (since_last_update > fixed_dt) {
+            game_update(fixed_dt);
+			since_last_update -= fixed_dt;
+        }
 
         SDL_SetRenderDrawColor(renderer, COLOR(0x1E1F29ff));
         SDL_RenderClear(renderer);

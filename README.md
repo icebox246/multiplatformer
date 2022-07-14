@@ -2,14 +2,15 @@
 
 <!-- TODOS -->
 
-**TODO (3):**
+**TODO (2):**
 
-- [ ] make game_update have fixed interval on sdl
-- [ ] move camera movement code to render
 - [ ] implement creating subtextures
+- [ ] add continuous collision detection
 
-**DONE (13):**
+**DONE (15):**
 
+- [x] move camera movement code to render
+- [x] make game_update have fixed interval on sdl
 - [x] open a window in SDL
 - [x] create a canvas and load wasm
 - [x] draw a crossplatform rectangle

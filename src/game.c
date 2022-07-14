@@ -88,8 +88,6 @@ void game_update(float dt) { /* platform_print("Tick"); */
         }
     }
 
-    // center camera on player
-    st.camera.center = v2add(player->pos, v2scale(st.input.mouse_vec, 0.2f));
 
     for (size_t i = 0; i < st.entity_count; i++) {
         /* if (!st.entities[i].on_ground) { */
@@ -102,6 +100,10 @@ void game_update(float dt) { /* platform_print("Tick"); */
 }
 
 void game_render(void) {
+	
+    // center camera on player
+    st.camera.center = v2add(st.entities[0].pos, v2scale(st.input.mouse_vec, 0.2f));
+
     platform_blit(10, 10, 0, 0, kitty_tex);
     V2 mn, mx;
     {

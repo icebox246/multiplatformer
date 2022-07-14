@@ -4,7 +4,7 @@
 #include "structs.h"
 
 bool aabb_overlaps_aabb(AABB* a, AABB* b);
-void entity_resolve_aabb_collision(Entity* entity, AABB* b, bool horz);
+static void entity_resolve_aabb_collision(Entity* entity, AABB* b, bool horz);
 
 // probably uses global state
 void entity_resolve_entity_collisions(Entity* entity, bool horz);

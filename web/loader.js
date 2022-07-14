@@ -84,7 +84,7 @@
     let lastTime = null;
     let frames = 0;
     let mousePos = {x: 0, y: 0};
-    const fixedDt = 1 / 120;
+    const fixedDt = 1 / 60;
     let timeSinceLastUpdate = 0;
     module.instance.exports.game_init();
     const loop = (timeNow) => {
