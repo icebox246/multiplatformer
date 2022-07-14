@@ -2,13 +2,13 @@
 
 <!-- TODOS -->
 
-**TODO (0):**
+**TODO (3):**
 
 - [ ] make game_update have fixed interval on sdl
 - [ ] move camera movement code to render
 - [ ] implement creating subtextures
 
-**DONE (0):**
+**DONE (13):**
 
 - [x] open a window in SDL
 - [x] create a canvas and load wasm
@@ -23,7 +23,6 @@
 - [x] implement proper tilemap rendering clamping
 - [x] implement loading images
 - [x] implement drawing images
-
 <!-- ENDTODOS -->
 
 
