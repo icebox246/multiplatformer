@@ -84,6 +84,16 @@ void platform_blit(float x, float y, float w, float h, size_t tex) {
     SDL_RenderCopyF(renderer, textures[tex].tex, &textures[tex].rect, &rect);
 }
 
+size_t platform_create_subtexture(size_t base, int dx, int dy, int dw, int dh) {
+    size_t id = texture_count++;
+    textures[id].tex = textures[base].tex;
+    textures[id].rect = (SDL_Rect){.x = textures[base].rect.x + dx,
+                                   .y = textures[base].rect.y + dy,
+                                   .w = dw,
+                                   .h = dh};
+    return id;
+}
+
 int main(void) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
         fprintf(stderr, "[ERROR] SDL failed to init %s\n", SDL_GetError());
@@ -139,7 +149,7 @@ int main(void) {
         // update
         while (since_last_update > fixed_dt) {
             game_update(fixed_dt);
-			since_last_update -= fixed_dt;
+            since_last_update -= fixed_dt;
         }
 
         SDL_SetRenderDrawColor(renderer, COLOR(0x1E1F29ff));

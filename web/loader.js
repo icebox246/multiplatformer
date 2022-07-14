@@ -2,7 +2,7 @@
     const canvas = document.querySelector('#canvas');
     const fpsDisplay = document.querySelector('#fps');
     const ctx = canvas.getContext('2d', {alpha: false});
-	ctx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
 
     const utf8decoder = new TextDecoder();
 
@@ -60,9 +60,8 @@
                     };
                 })).catch(console.error);
 
-				return texId;
+                return texId;
             },
-
             platform_blit(x, y, w, h, tex) {
                 w = w ? w : textures[tex].rect.w;
                 h = h ? h : textures[tex].rect.h;
@@ -71,8 +70,21 @@
                     textures[tex].rect.x, textures[tex].rect.y,  //
                     textures[tex].rect.w, textures[tex].rect.h,  //
                     x, y, w, h);                                 //
-            }
-
+            },
+            platform_create_subtexture(base, dx, dy, dw, dh) {
+                const baseTex = textures[base];
+				const id = textures.length;
+                textures[id] = {
+                    tex: baseTex.tex,
+                    rect: {
+                        x: baseTex.rect.x + dx,
+                        y: baseTex.rect.y + dy,
+                        w: dw,
+                        h: dh
+                    }
+                };
+                return id;
+            },
         }
     }
 
@@ -92,12 +104,12 @@
         timeSinceLastUpdate += dt;
         lastTime = timeNow;
         // update
-        while(timeSinceLastUpdate > fixedDt) {
+        while (timeSinceLastUpdate > fixedDt) {
             module.instance.exports.game_update(fixedDt);
             timeSinceLastUpdate -= fixedDt;
         }
 
-        //render
+        // render
         ctx.fillStyle = '#1E1F29';
         ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
         module.instance.exports.game_render();

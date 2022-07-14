@@ -2,13 +2,13 @@
 
 <!-- TODOS -->
 
-**TODO (2):**
+**TODO (1):**
 
-- [ ] implement creating subtextures
 - [ ] add continuous collision detection
 
-**DONE (15):**
+**DONE (16):**
 
+- [x] implement creating subtextures
 - [x] move camera movement code to render
 - [x] make game_update have fixed interval on sdl
 - [x] open a window in SDL

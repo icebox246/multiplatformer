@@ -20,6 +20,8 @@ void platform_print(char* txt);
 float platform_frand(void);
 // loads texture by name and returns its id
 size_t platform_load_texture(char* name); 
+// creates a subtexture of existing texture
+size_t platform_create_subtexture(size_t base, int dx, int dy, int dw, int dh); 
 // blits given texture to the screen (0 on size makes it use default)
 void platform_blit(float x, float y, float w, float h, size_t tex); 
 

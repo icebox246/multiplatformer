@@ -29,6 +29,7 @@ const char world_temp[] =
     "\0";
 
 size_t kitty_tex;
+size_t kitty_head_tex;
 size_t dirt_tex;
 
 void game_init() {
@@ -39,6 +40,8 @@ void game_init() {
 
     kitty_tex = platform_load_texture("kitty.bmp");
     dirt_tex = platform_load_texture("dirt.bmp");
+
+	kitty_head_tex = platform_create_subtexture(kitty_tex, 4, 7, 56, 35);
 
     platform_print("Textures loaded!");
 
@@ -109,6 +112,8 @@ void game_render(void) {
         v2add(st.entities[0].pos, v2scale(st.input.mouse_vec, 0.2f));
 
     platform_blit(10, 10, 0, 0, kitty_tex);
+    platform_blit(10, 100, 0, 0, kitty_head_tex);
+
     V2 mn, mx;
     {
         AABB a = get_camera_aabb();
