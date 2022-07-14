@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "la.h"
 #include "physics.h"
+#include "player.h"
 #include "structs.h"
 #include "util.h"
 
@@ -60,45 +61,17 @@ void game_init() {
 
     st.entities[st.entity_count++] =
         (Entity){.typ = E_PLAYER, .pos = v2(40, 40)};
+
+    st.gravity = v2(0.0f, 500.0f);
 }
 
 void game_update(float dt) { /* platform_print("Tick"); */
-    V2 gravity = v2(0.0f, 500.0f);
     Entity* player = &st.entities[0];
-    {  // player stuff
-        float player_move_acc = 1000;
-        float player_max_speed = 250;
-        float player_jump_height = 24 * 6;
-        float in_air_acc = 300;
-        float in_air_max_speed = 500;
-        if (!player->on_ground && !st.input.up) {
-            player_move_acc = in_air_acc;
-            player_max_speed = in_air_max_speed;
-        }
-        if (st.input.right) {
-            entity_accelerate(player, v2(player_move_acc, 0));
-        }
-        if (st.input.left) {
-            entity_accelerate(player, v2(-player_move_acc, 0));
-        }
-        // drag
-        /* if (player->on_ground) { */
-        entity_accelerate(
-            player, v2(-player->vel.x * player_move_acc / player_max_speed, 0));
-        /* } */
-        // jump
-        if (st.input.jp_up && player->on_ground) {
-            const float player_jump_speed =
-                qsqrtf(2 * gravity.y * player_jump_height);
-            platform_print(ftoa(2 * gravity.y * player_jump_height));
-            platform_print(ftoa(player_jump_speed));
-            player->vel.y = -player_jump_speed;
-        }
-    }
+	player_update(player, dt);
 
     for (size_t i = 0; i < st.entity_count; i++) {
         /* if (!st.entities[i].on_ground) { */
-        entity_accelerate(&st.entities[i], gravity);
+        entity_accelerate(&st.entities[i], st.gravity);
         /* } */
         entity_update(&st.entities[i], dt);
     }

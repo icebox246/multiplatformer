@@ -62,6 +62,7 @@ typedef struct {
     InputState input;
     V2 screen_size;
     Camera camera;
+	V2 gravity;
 } GameState;
 
 #endif  // __STRUCTS_H
