@@ -32,7 +32,7 @@ typedef struct {
 } Entity;
 
 #define WORLD_SIZE 1024
-#define TILE_SIZE 16
+#define TILE_SIZE 24
 #define WIDTH 1280
 #define HEIGHT 720
 

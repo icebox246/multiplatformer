@@ -1,5 +1,7 @@
 #include "util.h"
 
+#include <stdint.h>
+
 #include "la.h"
 #include "structs.h"
 
@@ -38,6 +40,28 @@ char* itoa(size_t a) {
     return ptr;
 }
 
+char* ftoa(float f) {
+    char* ptr = __scratch_buff + MAX_SCRATCH_LENGTH - 1;
+    *ptr = '\0';
+
+    uint64_t a = f * 1e5;
+    for (size_t i = 0; i < 5; i++) {
+        *(--ptr) = '0' + a % 10;
+        a /= 10;
+    }
+
+    *(--ptr) = '.';
+
+    if (a == 0) *(--ptr) = '0';
+
+    while (a) {
+        *(--ptr) = '0' + a % 10;
+        a /= 10;
+    }
+
+    return ptr;
+}
+
 AABB get_camera_aabb() {
     return (AABB){st.camera.center, v2(WIDTH * 0.5f, HEIGHT * 0.5f)};
 }
@@ -47,4 +71,19 @@ void get_aabb_tile_corners(AABB* a, V2* mn, V2* mx) {
     *mx = v2scale(v2add(a->center, a->half_size), 1.f / TILE_SIZE);
     *mn = v2clamp(*mn, v2(0, 0), v2(WORLD_SIZE, WORLD_SIZE));
     *mx = v2clamp(*mx, v2(0, 0), v2(WORLD_SIZE, WORLD_SIZE));
+}
+
+float qsqrtf(float x) {
+    float l = 0, r = x;
+    for (size_t i = 0; i < 8; i++) {
+        float m = (l + r) * 0.5f;
+        r = m * m > x ? m : r;
+        l = m * m > x ? l : m;
+    }
+    l = (l + r) * 0.5f;
+    l -= (l * l - x) / (2 * l);
+    l -= (l * l - x) / (2 * l);
+    l -= (l * l - x) / (2 * l);
+
+    return l;
 }

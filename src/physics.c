@@ -74,14 +74,14 @@ void entity_resolve_world_collisions(Entity* entity, bool horz) {
 
 void entity_update(Entity* entity, float dt) {
     // x axis
-    entity->pos.x += entity->vel.x * dt;
     entity->vel.x += entity->acc.x * dt;
+    entity->pos.x += entity->vel.x * dt;
     entity_resolve_entity_collisions(entity, 1);
     entity_resolve_world_collisions(entity, 1);
 
     // y axis
-    entity->pos.y += entity->vel.y * dt;
     entity->vel.y += entity->acc.y * dt;
+    entity->pos.y += entity->vel.y * dt;
 
     if (entity->vel.y < 0) entity->on_ground = 0;
 

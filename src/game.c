@@ -33,6 +33,7 @@ size_t dirt_tex;
 
 void game_init() {
     platform_print("Hello!");
+    platform_print(ftoa(qsqrtf(2)));
 
     platform_print("Loading textures...");
 
@@ -64,7 +65,7 @@ void game_update(float dt) { /* platform_print("Tick"); */
     {  // player stuff
         float player_move_acc = 1000;
         float player_max_speed = 250;
-        float player_jump_speed = 300;
+        float player_jump_height = 24 * 6;
         float in_air_acc = 300;
         float in_air_max_speed = 500;
         if (!player->on_ground && !st.input.up) {
@@ -81,13 +82,16 @@ void game_update(float dt) { /* platform_print("Tick"); */
         /* if (player->on_ground) { */
         entity_accelerate(
             player, v2(-player->vel.x * player_move_acc / player_max_speed, 0));
-		/* } */
+        /* } */
         // jump
         if (st.input.jp_up && player->on_ground) {
+            const float player_jump_speed =
+                qsqrtf(2 * gravity.y * player_jump_height);
+            platform_print(ftoa(2 * gravity.y * player_jump_height));
+            platform_print(ftoa(player_jump_speed));
             player->vel.y = -player_jump_speed;
         }
     }
-
 
     for (size_t i = 0; i < st.entity_count; i++) {
         /* if (!st.entities[i].on_ground) { */
@@ -96,13 +100,13 @@ void game_update(float dt) { /* platform_print("Tick"); */
         entity_update(&st.entities[i], dt);
     }
 
-	update_input();
+    update_input();
 }
 
 void game_render(void) {
-	
     // center camera on player
-    st.camera.center = v2add(st.entities[0].pos, v2scale(st.input.mouse_vec, 0.2f));
+    st.camera.center =
+        v2add(st.entities[0].pos, v2scale(st.input.mouse_vec, 0.2f));
 
     platform_blit(10, 10, 0, 0, kitty_tex);
     V2 mn, mx;
@@ -140,7 +144,7 @@ void game_key_down(size_t key) {
         case 'W':
         case 'w':
             st.input.up = 1;
-			st.input.jp_up = 1;
+            st.input.jp_up = 1;
             break;
         case 'D':
         case 'd':
