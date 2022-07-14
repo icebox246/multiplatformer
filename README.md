@@ -2,8 +2,10 @@
 
 <!-- TODOS -->
 
-**TODO (1):**
+**TODO (3):**
 
+- [ ] draw some player sprites
+- [ ] make player render as animated sprite
 - [ ] add continuous collision detection
 
 **DONE (16):**
