@@ -73,7 +73,7 @@
             },
             platform_create_subtexture(base, dx, dy, dw, dh) {
                 const baseTex = textures[base];
-				const id = textures.length;
+                const id = textures.length;
                 textures[id] = {
                     tex: baseTex.tex,
                     rect: {
@@ -99,6 +99,7 @@
     const fixedDt = 1 / 60;
     let timeSinceLastUpdate = 0;
     module.instance.exports.game_init();
+    module.instance.exports.game_resize(canvas.width, canvas.height);
     const loop = (timeNow) => {
         const dt = (timeNow - lastTime) * 0.001;
         timeSinceLastUpdate += dt;

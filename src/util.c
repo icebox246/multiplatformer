@@ -63,7 +63,7 @@ char* ftoa(float f) {
 }
 
 AABB get_camera_aabb() {
-    return (AABB){st.camera.center, v2(WIDTH * 0.5f, HEIGHT * 0.5f)};
+    return (AABB){st.camera.center, v2scale(st.screen_size, 0.5f)};
 }
 
 void get_aabb_tile_corners(AABB* a, V2* mn, V2* mx) {

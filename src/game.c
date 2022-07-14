@@ -42,7 +42,7 @@ void game_init() {
     kitty_tex = platform_load_texture("kitty.bmp");
     dirt_tex = platform_load_texture("dirt.bmp");
 
-	kitty_head_tex = platform_create_subtexture(kitty_tex, 4, 7, 56, 35);
+    kitty_head_tex = platform_create_subtexture(kitty_tex, 4, 7, 56, 35);
 
     platform_print("Textures loaded!");
 
@@ -67,7 +67,7 @@ void game_init() {
 
 void game_update(float dt) { /* platform_print("Tick"); */
     Entity* player = &st.entities[0];
-	player_update(player, dt);
+    player_update(player, dt);
 
     for (size_t i = 0; i < st.entity_count; i++) {
         /* if (!st.entities[i].on_ground) { */
@@ -97,8 +97,8 @@ void game_render(void) {
             int x = tx * TILE_SIZE;
             int y = ty * TILE_SIZE;
             if (st.world.tiles[tx + ty * WORLD_SIZE]) {
-                platform_blit(x - st.camera.center.x + WIDTH / 2.0f,
-                              y - st.camera.center.y + HEIGHT / 2.0f, TILE_SIZE,
+                platform_blit(x - st.camera.center.x + st.screen_size.x / 2.0f,
+                              y - st.camera.center.y + st.screen_size.y / 2.0f, TILE_SIZE,
                               TILE_SIZE, dirt_tex);
             }
         }
@@ -107,8 +107,8 @@ void game_render(void) {
     for (size_t i = 0; i < st.entity_count; i++) {
         AABB a = get_entity_aabb(&st.entities[i]);
         platform_rect(
-            a.center.x - a.half_size.x - st.camera.center.x + WIDTH / 2.0f,
-            a.center.y - a.half_size.y - st.camera.center.y + HEIGHT / 2.0f,
+            a.center.x - a.half_size.x - st.camera.center.x + st.screen_size.x / 2.0f,
+            a.center.y - a.half_size.y - st.camera.center.y + st.screen_size.y / 2.0f,
             a.half_size.x * 2, a.half_size.y * 2, 0x22ff22ff);
     }
 }
@@ -158,5 +158,7 @@ void game_key_up(size_t key) {
 void game_mouse_move(size_t x, size_t y) {
     st.input.mouse_pos = v2(x, y);
     st.input.mouse_vec =
-        v2sub(st.input.mouse_pos, v2(WIDTH * 0.5f, HEIGHT * 0.5f));
+        v2sub(st.input.mouse_pos, v2scale(st.screen_size, 0.5f));
 }
+
+void game_resize(size_t x, size_t y) { st.screen_size = v2(x, y); }

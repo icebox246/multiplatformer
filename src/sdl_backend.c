@@ -5,6 +5,7 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_video.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -102,7 +103,7 @@ int main(void) {
 
     window = SDL_CreateWindow("Platformer", SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED, 1280, 720,
-                              SDL_WINDOW_ALWAYS_ON_TOP);
+                              SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(
         window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -142,8 +143,13 @@ int main(void) {
                 } break;
                 case SDL_MOUSEMOTION: {
                     game_mouse_move(ev.motion.x, ev.motion.y);
-                }
+                } break;
             }
+        }
+        {
+            int w, h;
+            SDL_GetWindowSize(window, &w, &h);
+            game_resize(w, h);
         }
 
         // update

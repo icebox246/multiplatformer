@@ -9,6 +9,7 @@ void game_render(void);          // renders game state
 void game_key_down(size_t key);  // runs when a key is pressed, key is key code
 void game_key_up(size_t key);    // runs when a key is released
 void game_mouse_move(size_t x, size_t y);  // runs when mouse changes position
+void game_resize(size_t x, size_t y);
 
 // Imported functions
 

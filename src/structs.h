@@ -33,8 +33,8 @@ typedef struct {
 
 #define WORLD_SIZE 1024
 #define TILE_SIZE 24
-#define WIDTH 1280
-#define HEIGHT 720
+#define DEFAULT_WIDTH 1280
+#define DEFAULT_HEIGHT 720
 
 typedef struct {
     uint8_t tiles[WORLD_SIZE * WORLD_SIZE];

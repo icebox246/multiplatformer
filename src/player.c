@@ -1,6 +1,7 @@
 #include "player.h"
 
 void player_update(Entity* player, float dt) {
+	(void) dt;
     float player_move_acc = 1000;
     float player_max_speed = 250;
     float player_jump_height = 24 * 3;

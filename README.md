@@ -8,8 +8,9 @@
 - [ ] make player render as animated sprite
 - [ ] add continuous collision detection
 
-**DONE (16):**
+**DONE (17):**
 
+- [x] make window resizable
 - [x] implement creating subtextures
 - [x] move camera movement code to render
 - [x] make game_update have fixed interval on sdl
