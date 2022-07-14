@@ -24,5 +24,9 @@ void get_aabb_tile_corners(AABB* a, V2* mn, V2* mx);
 
 float qsqrtf(float x);
 
+#define TO_SCREEN_V2(v) \
+		((v).x - st.camera.center.x + st.screen_size.x * 0.5f), \
+		((v).y - st.camera.center.y + st.screen_size.y * 0.5f)
+
 
 #endif  // __UTIL_H

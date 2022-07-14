@@ -2,13 +2,22 @@
 
 #include "la.h"
 #include "structs.h"
+#include "player.h"
 
 AABB get_entity_aabb(Entity* entity) {
     switch (entity->typ) {
         case E_PLAYER: {
-            return (AABB){entity->pos, v2(16, 20)};
+            return player_aabb(entity);
         } break;
     }
 
     return (AABB){};
+}
+
+void entity_render(Entity* entity) {
+    switch (entity->typ) {
+        case E_PLAYER: {
+            player_render(entity);
+        } break;
+    }
 }

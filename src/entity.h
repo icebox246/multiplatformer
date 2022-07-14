@@ -8,5 +8,6 @@ typedef enum {
 } EntityType;
 
 AABB get_entity_aabb(Entity* entity);
+void entity_render(Entity* entity);
 
 #endif  // __ENTITY_H

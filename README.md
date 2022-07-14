@@ -2,14 +2,14 @@
 
 <!-- TODOS -->
 
-**TODO (3):**
+**TODO (1):**
 
-- [ ] draw some player sprites
-- [ ] make player render as animated sprite
 - [ ] add continuous collision detection
 
-**DONE (17):**
+**DONE (19):**
 
+- [x] make player render as animated sprite
+- [x] draw some player sprites
 - [x] make window resizable
 - [x] implement creating subtextures
 - [x] move camera movement code to render

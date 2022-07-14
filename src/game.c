@@ -41,8 +41,9 @@ void game_init() {
 
     kitty_tex = platform_load_texture("kitty.bmp");
     dirt_tex = platform_load_texture("dirt.bmp");
-
     kitty_head_tex = platform_create_subtexture(kitty_tex, 4, 7, 56, 35);
+
+	player_init();
 
     platform_print("Textures loaded!");
 
@@ -105,11 +106,12 @@ void game_render(void) {
     }
 
     for (size_t i = 0; i < st.entity_count; i++) {
-        AABB a = get_entity_aabb(&st.entities[i]);
-        platform_rect(
-            a.center.x - a.half_size.x - st.camera.center.x + st.screen_size.x / 2.0f,
-            a.center.y - a.half_size.y - st.camera.center.y + st.screen_size.y / 2.0f,
-            a.half_size.x * 2, a.half_size.y * 2, 0x22ff22ff);
+		entity_render(&st.entities[i]);
+        /* AABB a = get_entity_aabb(&st.entities[i]); */
+        /* platform_rect( */
+        /*     a.center.x - a.half_size.x - st.camera.center.x + st.screen_size.x / 2.0f, */
+        /*     a.center.y - a.half_size.y - st.camera.center.y + st.screen_size.y / 2.0f, */
+        /*     a.half_size.x * 2, a.half_size.y * 2, 0x22ff22ff); */
     }
 }
 
