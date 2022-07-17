@@ -6,8 +6,10 @@
 
 - [ ] add continuous collision detection
 
-**DONE (19):**
+**DONE (21):**
 
+- [x] add inverted animations to player sprite
+- [x] add box entity
 - [x] make player render as animated sprite
 - [x] draw some player sprites
 - [x] make window resizable
