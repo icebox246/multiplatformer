@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 
+#include "box.h"
 #include "entity.h"
 #include "globals.h"
 #include "la.h"
@@ -43,7 +44,8 @@ void game_init() {
     dirt_tex = platform_load_texture("dirt.bmp");
     kitty_head_tex = platform_create_subtexture(kitty_tex, 4, 7, 56, 35);
 
-	player_init();
+    player_init();
+    box_init();
 
     platform_print("Textures loaded!");
 
@@ -63,12 +65,17 @@ void game_init() {
     st.entities[st.entity_count++] =
         (Entity){.typ = E_PLAYER, .pos = v2(40, 40)};
 
+    st.entities[st.entity_count++] =
+        (Entity){.typ = E_PLAYER, .pos = v2(80, 40)};
+
+    st.entities[st.entity_count++] =
+        (Entity){.typ = E_BOX, .pos = v2(200, 40), .pushable = 1};
+
     st.gravity = v2(0.0f, 500.0f);
 }
 
 void game_update(float dt) { /* platform_print("Tick"); */
-    Entity* player = &st.entities[0];
-    player_update(player, dt);
+    /* Entity* player = &st.entities[0]; */
 
     for (size_t i = 0; i < st.entity_count; i++) {
         /* if (!st.entities[i].on_ground) { */
@@ -99,18 +106,20 @@ void game_render(void) {
             int y = ty * TILE_SIZE;
             if (st.world.tiles[tx + ty * WORLD_SIZE]) {
                 platform_blit(x - st.camera.center.x + st.screen_size.x / 2.0f,
-                              y - st.camera.center.y + st.screen_size.y / 2.0f, TILE_SIZE,
-                              TILE_SIZE, dirt_tex);
+                              y - st.camera.center.y + st.screen_size.y / 2.0f,
+                              TILE_SIZE, TILE_SIZE, dirt_tex);
             }
         }
     }
 
     for (size_t i = 0; i < st.entity_count; i++) {
-		entity_render(&st.entities[i]);
+        entity_render(&st.entities[i]);
         /* AABB a = get_entity_aabb(&st.entities[i]); */
         /* platform_rect( */
-        /*     a.center.x - a.half_size.x - st.camera.center.x + st.screen_size.x / 2.0f, */
-        /*     a.center.y - a.half_size.y - st.camera.center.y + st.screen_size.y / 2.0f, */
+        /*     a.center.x - a.half_size.x - st.camera.center.x +
+         * st.screen_size.x / 2.0f, */
+        /*     a.center.y - a.half_size.y - st.camera.center.y +
+         * st.screen_size.y / 2.0f, */
         /*     a.half_size.x * 2, a.half_size.y * 2, 0x22ff22ff); */
     }
 }

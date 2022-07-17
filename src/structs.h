@@ -26,6 +26,7 @@ typedef struct {
     size_t mx_health;  // maximum health
     bool dead;         // is enemy dead?
     bool on_ground;
+	bool pushable;
     V2 pos;  // current position
     V2 vel;  // current velocity
     V2 acc;  // current acceleration, should be zeroed after updating

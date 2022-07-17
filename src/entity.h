@@ -4,7 +4,8 @@
 #include "structs.h"
 
 typedef enum {
-	E_PLAYER
+	E_PLAYER,
+	E_BOX
 } EntityType;
 
 AABB get_entity_aabb(Entity* entity);

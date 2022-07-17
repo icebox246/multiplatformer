@@ -48,3 +48,4 @@ V2 v2lerp(V2 a, V2 b, float t) {
     return v2(lerp(a.x, b.x, t), lerp(a.y, b.y, t));
 }
 
+float* v2axis(V2* v, int ax) { return ax ? &v->y : &v->x; }

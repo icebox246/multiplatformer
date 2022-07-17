@@ -6,35 +6,25 @@
 #include "game.h"
 #include "globals.h"
 #include "la.h"
+#include "player.h"
 #include "structs.h"
 #include "util.h"
 
-void entity_resolve_aabb_collision(Entity* entity, AABB* b, bool horz) {
+bool entity_resolve_aabb_collision(Entity* entity, AABB* b, bool axis) {
     AABB a = get_entity_aabb(entity);
     if (aabb_overlaps_aabb(&a, b)) {
-        if (horz) {
-            // moving horz
-            float dx =
-                absf(a.center.x - b->center.x) - a.half_size.x - b->half_size.x;
-            if (a.center.x < b->center.x)
-                entity->pos.x += dx;
-            else
-                entity->pos.x -= dx;
-            entity->vel.x = 0;
-        } else {
-            // moving vert
-            float dy =
-                absf(a.center.y - b->center.y) - a.half_size.y - b->half_size.y;
-            if (a.center.y < b->center.y)
-                entity->pos.y += dy;
-            else
-                entity->pos.y -= dy;
-            if (entity->vel.y >= 0) {
-                entity->on_ground = 1;
-            }
-            entity->vel.y = 0;
+        float dx = absf(V2AXIS(a.center, axis) - V2AXIS(b->center, axis)) -
+                   V2AXIS(a.half_size, axis) - V2AXIS(b->half_size, axis);
+        if (V2AXIS(a.center, axis) < V2AXIS(b->center, axis))
+            V2AXIS(entity->pos, axis) += dx;
+        else
+            V2AXIS(entity->pos, axis) -= dx;
+        V2AXIS(entity->vel, axis) = 0;
+        if (axis == 1 && entity->vel.y >= 0) {
+            entity->on_ground = 1;
         }
     }
+    return 0;
 }
 
 bool aabb_overlaps_aabb(AABB* a, AABB* b) {
@@ -44,16 +34,16 @@ bool aabb_overlaps_aabb(AABB* a, AABB* b) {
     return 0;
 }
 
-void entity_resolve_entity_collisions(Entity* entity, bool horz) {
+void entity_resolve_entity_collisions(Entity* entity, bool axis) {
     for (size_t i = 0; i < st.entity_count; i++) {
         if (&st.entities[i] == entity) continue;
         /* AABB a = get_entity_aabb(entity); */
         AABB b = get_entity_aabb(&st.entities[i]);
-        entity_resolve_aabb_collision(entity, &b, horz);
+        entity_resolve_aabb_collision(entity, &b, axis);
     }
 }
 
-void entity_resolve_world_collisions(Entity* entity, bool horz) {
+void entity_resolve_world_collisions(Entity* entity, bool axis) {
     AABB a = get_entity_aabb(entity);
     V2 mn, mx;
     get_aabb_tile_corners(&a, &mn, &mx);
@@ -67,17 +57,22 @@ void entity_resolve_world_collisions(Entity* entity, bool horz) {
                                y * TILE_SIZE + TILE_SIZE / 2.0f),
                             v2(TILE_SIZE / 2.0f, TILE_SIZE / 2.0f)};
 
-            entity_resolve_aabb_collision(entity, &b, horz);
+            entity_resolve_aabb_collision(entity, &b, axis);
         }
     }
 }
 
 void entity_update(Entity* entity, float dt) {
+    switch (entity->typ) {
+        case E_PLAYER: {
+            player_update(entity, dt);
+        } break;
+    }
     // x axis
     entity->vel.x += entity->acc.x * dt;
     entity->pos.x += entity->vel.x * dt;
-    entity_resolve_entity_collisions(entity, 1);
-    entity_resolve_world_collisions(entity, 1);
+    entity_resolve_entity_collisions(entity, 0);
+    entity_resolve_world_collisions(entity, 0);
 
     // y axis
     entity->vel.y += entity->acc.y * dt;
@@ -85,8 +80,8 @@ void entity_update(Entity* entity, float dt) {
 
     if (entity->vel.y < 0) entity->on_ground = 0;
 
-    entity_resolve_entity_collisions(entity, 0);
-    entity_resolve_world_collisions(entity, 0);
+    entity_resolve_entity_collisions(entity, 1);
+    entity_resolve_world_collisions(entity, 1);
 
     entity->acc = v2zero();
 }

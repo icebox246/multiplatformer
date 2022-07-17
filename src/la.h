@@ -16,4 +16,7 @@ V2 v2lerp(V2 a, V2 b, float t);
 
 V2 v2clamp(V2 a, V2 mn, V2 mx);
 
+float* v2axis(V2* v, int ax);
+#define V2AXIS(v,ax) (*v2axis(&(v),ax))
+
 #endif
