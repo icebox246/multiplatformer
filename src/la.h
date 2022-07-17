@@ -9,9 +9,9 @@ V2 v2add(V2 a, V2 b);
 V2 v2sub(V2 a, V2 b);
 V2 v2mult(V2 a, V2 b);
 V2 v2scale(V2 a, float c);
-/* float v2len(V2 a); */
+float v2len(V2 a);
 V2 v2perp(V2 a);
-/* V2 v2norm(V2 a); */
+V2 v2norm(V2 a);
 V2 v2lerp(V2 a, V2 b, float t);
 
 V2 v2clamp(V2 a, V2 mn, V2 mx);
