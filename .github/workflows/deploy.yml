@@ -8,15 +8,15 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-12
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
       - name: Install packages
         run: |
-          sudo apt-get update
-          sudo apt-get install llvm clang make gcc-multilib lld
+          brew install make
+          brew install llvm
 
       - name: List targets
         run: llc --version
