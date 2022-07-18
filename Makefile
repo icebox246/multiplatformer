@@ -4,7 +4,7 @@ WASM_SOURCES=${SOURCES}
 
 FLAGS=-Wall -Wextra -Wswitch-enum 
 LINUX_FLAGS=${FLAGS} `pkg-config sdl2 --libs --cflags`
-WASM_FLAGS=${FLAGS} -fno-builtin -mtriple=wasm32-unknown-unknown --no-standard-libraries -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -DWASM
+WASM_FLAGS=${FLAGS} -fno-builtin --target=wasm32-unknown-unknown --no-standard-libraries -Wl,--no-entry -Wl,--allow-undefined -Wl,--export-all -DWASM
 
 linux: build/game
 
