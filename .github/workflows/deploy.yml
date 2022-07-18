@@ -24,9 +24,12 @@ jobs:
       - name: Compiles WASM
         run: |
           PATH="/usr/local/opt/llvm/bin:$PATH" make wasm
+
+      - name: Lists files in web/
+        run: ls web
           
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
-          folder: . #
+          folder: ./ #
 
