@@ -15,8 +15,8 @@ jobs:
       
       - name: Install packages
         run: |
-          apt update
-          apt install llvm clang make
+          sudo apt-get update
+          sudo apt-get install llvm clang make
           
       - name: Compiles WASM
         run: |
