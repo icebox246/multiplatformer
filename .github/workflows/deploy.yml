@@ -20,6 +20,9 @@ jobs:
 
       - name: List targets
         run: llc --version
+
+        env:
+          LLVM: "/usr/local/opt/llvm/bin"
           
       - name: Compiles WASM
         run: |
