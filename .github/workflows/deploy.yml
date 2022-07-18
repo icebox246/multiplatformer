@@ -16,7 +16,7 @@ jobs:
       - name: Install packages
         run: |
           brew install make
-          brew install --with-toolchain llvm
+          brew install llvm
 
       - name: List targets
         run: llc --version
@@ -24,6 +24,9 @@ jobs:
       - name: Compiles WASM
         run: |
           make wasm
+
+        env:
+          LLVM: "/usr/local/opt/llvm/bin"
           
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.4
