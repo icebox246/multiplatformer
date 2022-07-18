@@ -16,8 +16,7 @@ jobs:
       - name: Install packages
         run: |
           brew install make
-          brew install llvm
-          brew link --force llvm
+          brew install --with-toolchain llvm
 
       - name: List targets
         run: llc --version
