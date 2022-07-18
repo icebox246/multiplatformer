@@ -16,7 +16,7 @@ jobs:
       - name: Install packages
         run: |
           sudo apt-get update
-          sudo apt-get install llvm clang make wabt
+          sudo apt-get install llvm clang make
 
       - name: Print available targets
         run: clang --print-supported-cpus
