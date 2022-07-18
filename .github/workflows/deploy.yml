@@ -23,7 +23,7 @@ jobs:
           
       - name: Compiles WASM
         run: |
-          PATH="/usr/local/opt/llvm/bin:$PATH" make wasm
+          PATH="/usr/local/opt/llvm/bin:$PATH" make -B wasm
 
       - name: Lists files in web/ and add game.wasm
         run: |
