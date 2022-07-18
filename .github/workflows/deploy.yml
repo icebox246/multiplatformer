@@ -17,9 +17,6 @@ jobs:
         run: |
           brew install make
           brew install llvm
-
-      - name: List targets
-        run: llc --version
           
       - name: Compiles WASM
         run: |
