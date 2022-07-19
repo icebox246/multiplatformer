@@ -38,6 +38,8 @@ Fast paced 2d movement shooter.
 
 Demo: [icebox246.github.io/multiplatformer/web/](https://icebox246.github.io/multiplatformer/web/index.html)
 
+[![Build and deploy](https://github.com/icebox246/multiplatformer/actions/workflows/deploy.yml/badge.svg)](https://github.com/icebox246/multiplatformer/actions/workflows/deploy.yml)
+
 # Mechanics
 
 - Fast paced, acceleration based movement.
