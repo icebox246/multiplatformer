@@ -9,6 +9,7 @@ WASM_FLAGS=${FLAGS} -fno-builtin --target=wasm32-unknown-unknown --no-standard-l
 linux: build/game
 
 build/game: ${LINUX_SOURCES}
+	[ -d "build"] || mkdir build
 	cc ${LINUX_SOURCES} ${LINUX_FLAGS} -o build/game
 
 wasm: web/game.wasm

@@ -1,0 +1,4 @@
+tasks:
+    - before: sudo apt install llvm libsdl2-dev
+    - init: make wasm
+    - command: npx serve
